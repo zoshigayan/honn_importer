@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 )
 
 type BookAPIResponse struct {
@@ -31,6 +32,16 @@ type Book struct {
 	PublishedDate string
 	Description   string
 	Thumbnail     string
+}
+
+func (b Book) Print() {
+	fmt.Printf("======================================================\n")
+	fmt.Printf("Title:          %s\n", b.Title)
+	fmt.Printf("Subtitle:       %s\n", b.Subtitle)
+	fmt.Printf("Authors:        %s\n", strings.Join(b.Authors, ","))
+	fmt.Printf("PublishedDate:  %s\n", b.PublishedDate)
+	fmt.Printf("Description:    %s\n", b.Description)
+	fmt.Printf("======================================================\n")
 }
 
 func fetchBook(isbn string) (Book, error) {
@@ -84,6 +95,6 @@ func main() {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		fmt.Printf("%s\n", book.Title)
+		book.Print()
 	}
 }
